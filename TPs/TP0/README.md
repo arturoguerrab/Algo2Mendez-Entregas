@@ -23,14 +23,14 @@
 
 ## 1. Instrucciones
 
-### 1.1. Compilar el proyecto
+### 1.1. Compilar el proyecto desde la carpeta TP0
 ```bash
-gcc -std=c99 -Wall -Wextra -g -o programa main.c leer_linea.c
+gcc -std=c99 -Wall -Wconversion -Wtype-limits -pedantic -Werror -O2 -g src/*.c -o programa
 ```
 
 ### 1.2. Ejecutar el programa con Valgrind
 ```bash
-valgrind --leak-check=full ./programa
+valgrind --leak-check=full --track-origins=yes ./programa
 ```
 
 ## 2. Funcionamiento

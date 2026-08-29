@@ -22,7 +22,8 @@ char *leer_linea();
  * Si el tamaño del bloque no es suficiente, se utiliza realloc para agrandar el
  * bloque y se actualiza *tamaño y *ptr.
  *
- * Devuelve la cantidad de caracteres leidos (sin incluír el 0 final) o -1 en caso de error.
+ * Devuelve la cantidad de caracteres leidos (sin incluír el 0 final) o -1 en
+ * caso de error.
  */
 int leer_linea_ptr(char **ptr, size_t *tamaño);
 
