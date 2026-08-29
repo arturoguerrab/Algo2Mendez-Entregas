@@ -5,13 +5,13 @@
 char *leer_linea()
 {
 	size_t tamanio = BLOQUE_MEMORIA;
-	int largo;
+	int ml;
 	char *ptr = malloc(sizeof(char) * tamanio);
 
 	if (ptr != NULL)
 	{
-		largo = leer_linea_ptr(&ptr, &tamanio);
-		if (largo == -1)
+		ml = leer_linea_ptr(&ptr, &tamanio);
+		if (ml == -1)
 		{
 			free(ptr);
 			ptr = NULL;
