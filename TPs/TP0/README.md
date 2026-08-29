@@ -2,22 +2,14 @@
     <img width="32px" src="img/algo2.svg">
 </div>
 
-# TP
-
-> [!IMPORTANT]
-> Esto es una plantilla del informe donde cada sección está delimitada por su título. Se recomienda mantener las secciones y tomar los ejemplos de las mismas para hacer el informe. El contenido de las secciones y comentarios como este deben ser eliminados del informe presentado.
+# TP0
 
 ## Información del estudiante
 
-* (Nombre y Apellido)
-* (Padrón)
-* (Mail)
-* (Username de GitHub)
-
----
-
-> [!WARNING]
-> Tener en cuenta que el informe se solicita en el ámbito universitario; el texto debe ser coherente, gramatical y ortográficamente correcto y con vocabulario adecuado para dicho contexto.
+* Arturo Guerra
+* 115187
+* aguerrab@fi.uba.ar
+* arturoguerrab
 
 ## Índice
 * [1. Instrucciones](#1-Instrucciones)
@@ -38,17 +30,12 @@
 
 ### 1.1. Compilar el proyecto
 ```bash
-comando
+gcc -g -o programa  main.c leer_linea.c
 ```
 
-### 1.2. Ejecutar las pruebas
+### 1.2. Ejecutar el programa con Valgrind
 ```bash
-comando
-```
-
-### 1.3. Ejecutar el programa con Valgrind
-```bash
-comando
+valgrind --leak-check=full --track-origins=yes -s ./programa
 ```
 
 ## 2. Funcionamiento
@@ -61,10 +48,13 @@ Explicar **qué** hace el TP implementado, aclarando todas las decisiones de fun
 > Es importante usar diagramas para explicar los conceptos de forma clara, pero el exceso será negativo. Los diagramas deben tener un fin explicativo y, por lo general, sirven para reemplazar uno o múltiples párrafos de explicación.
 
 ## 2. Funcionamiento (EJEMPLO)
-El programa recibe 7 números del usuario y una vez obtenidos todos los muestra en pantalla. Para esto define un vector estático de 7 elementos y llena el mismo con los datos que inserta el usuario; cuando termina de insertar todos los números procede a imprimirlos en pantalla.
+El programa llama a la funcion leer_linea() desde el main, para realizar el ingreso dinamico de caracteres. Luego esta funcion se encarga de reservar un espacio dinamico en la memoria mediante la funcion malloc. Si el puntero resultante no es NULL (ya que malloc pudo reservar el espacio en memoria), procede a invocar a la funcion leer_linea_ptr(). La misma recibe la direccion de memoria del puntero reservado con malloc y a su vez el tamaño inicial reservado. Si el puntero es NULL directamente devuelve el NULL hacia el main. 
+Cuando se invoca a la funcion leer_linea_ptr(), se genera un while para que se pueda ir leyendo caracter a caracter desde el stdin mediante la funcion getchar(). Esto se realiza hasta que encuentre el '\n' ingresado por el usuario o encuentre el EOF. Ademas, se establece como condicion de salida el maximo logico (ml)=-1, ya que este indicaria que hubo un error al reasignar memoria con el realloc. 
+Dentro del while, el caracter obtenido en cada iteracion se va guardando en la direccion de memoria que corresponda segun el maximo logico y a este se le suma 1 en cada iteracion. Si el maximo logico llega al tope del espacio reservado, el realloc asigna el doble del espacio reservado actual para seguir con el ingreso de los caracteres restantes. Si el realloc fue exitoso se actualizan los parametros, la direccion en memoria del puntero recibido y el tamaño del bloque de memoria reservado. Si el realloc tiene un error, devuelve el ml=-1 para salir del bucle. Una vez terminado el while sin errores, se asigna el '\0' en la posicion ml para indicar el final de la cadena. 
+Las funciones free() para liberar la memoria se encuentran en el main, ya que este invoca a la funcion leer_linea() que libera la memoria luego de imprimir el nombre. En dicha funcion se encuentra otro free(), el cual libera la memoria solo si el realloc dentro de la otra funcion leer_linea_ptr() tiene un error, devolviendo -1.
 <div align="center">
-  <img src="img/diagrama_flujo_programa.svg" width="70%">
-  <p>Diagrama de flujo del programa explicado con más detalle.</p>
+  <img src="img/DF_Leer_linea.png" width="70%">
+  <p>Diagrama de flujo de la funcion leer_linea()</p>
 </div>
 
 ## 3. Estructura

@@ -1,4 +1,4 @@
-|#include <stdio.h>
+#include <stdio.h>
 #include "leer_linea.h"
 
 int main(int argc, char *argv[])
